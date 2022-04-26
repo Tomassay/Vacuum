@@ -2,6 +2,8 @@ from pandas import *
 import random
 #import numpy as np
 
+from findneighbors import findNeighbors
+
 wall = 'w'
 f = 0
 d = 1
@@ -346,3 +348,6 @@ print('Robi PXPY: ' , robi.posy, robi.posx)
 #print(DataFrame(myRoom))
 
 #kitchen.print_room()
+
+n = list(findNeighbors(kitchen.map, 2, 1))  # 9 szomszédai
+print(n)
