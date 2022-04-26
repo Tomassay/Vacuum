@@ -22,12 +22,13 @@ class Cell:
         self.cleanness = cleanness,
 
     def __str__(self):
-
-        if self.cleanness:
-            cleanness = '.'
-        else:
-            cleanness = '#'
-        return cleanness
+        return str(self.definition)
+        #
+        # if self.cleanness:
+        #     cleanness = '.'
+        # else:
+        #     cleanness = '#'
+        # return cleanness
 
     def set_clean(self):
         self.cleanness = True
@@ -53,6 +54,9 @@ class Room:
         size = self.room_size()
         return 'Its a ' + self.name + ' and its ' + size +  'm2 and its clean'
 
+    def get_definition(self):
+        return self.definition
+
     def scan_room(self, robot):
         for w in range(self.width-1):
             for l in range(self.length-1):
@@ -61,20 +65,25 @@ class Room:
 
     def make_room(self):
         try:
+            number = 0
             for w in range(self.width):
                 #print('w', w)
                 for l in range(self.length):
                    # print('l', l)
                     if w == 0:
+
                         self.map[w][l] = wall
                     elif w == self.width-1:
                         self.map[w][l] = wall
                     elif l == 0:
-                        self.map[w][l] = wall
+                       self.map[w][l] = wall
                     elif l == self.length-1:
                         self.map[w][l] = wall
                     else:
-                        self.map[w][l] = Cell(posy=w, posx=l, definition='basic', cleanness=True)
+                        #self.map[w][l] = Cell(posy=w, posx=l, definition=number, cleanness=True)
+                        self.map[w][l] = number
+                        number += 1
+
 
         except:
             pass
@@ -108,9 +117,10 @@ class Vacuum_Robot:
     def __init__(self, posy, posx):
         self.posy = posy
         self.posx = posx
+        self.falig(kitchen.map)
 
     def __str__(self):
-        return 'o'
+        return '❤'
 
     def clean(self, Cell):
         if self.posx == Cell.posx and self.posy == Cell.posy:
@@ -123,6 +133,35 @@ class Vacuum_Robot:
         self.posx += 1
         matrix[self.posy][self.posx] = self
         return matrix
+
+    def collision_detection(self, elem):
+        return elem == 'w'
+
+    def falig(self, matrix):
+        try:
+            print(self.posx, self.posy)
+            print(self.collision_detection(matrix.map[self.posx+1][self.posy]))
+            print('térképteszt', matrix.map[0][2])
+        # for w in matrix.map:
+        #     for l in matrix.map[w]:
+        #         if not self.collision_detection(matrix.map[w][l]):
+        #             self.move_down(matrix.map)
+        #             matrix.print_room()
+            print('a vizsgált elem: ', matrix.map[self.posx+2][self.posy])
+            print('W-E',self.collision_detection(matrix.map[self.posx+2][self.posy]))
+            if not self.collision_detection(matrix.map[self.posx+2][self.posy]):
+                print('itt vagyok:' , self.posx, self.posy)
+                self.move_down(matrix.map)
+            else:
+                if not self.collision_detection(matrix.map[self.posx][self.posy-1]):
+                    self.move_left(matrix.map)
+            matrix.print_room()
+
+        except:
+            print("FAL")
+
+    def place_robot(self, matrix):
+        matrix[self.posy][self.posx] = self
 
     def move_left(self, matrix):
 
@@ -193,18 +232,9 @@ class Vacuum_Robot:
         return possible
 
 
-
-
-
-
-
-
-
 kitchen = Room('kitchen', 10, 10)
 
-
-
-kitchen.print_room()
+#kitchen.print_room()
 kitchen.make_room()
 # kitchen.make_dirt()
 # kitchen.print_room()
@@ -218,12 +248,12 @@ kitchen.make_room()
 # print('TISZTA')
 # kitchen.print_room()
 #
-
-kosz = Cell(posy=3, posx=3, definition="kitakarított", cleanness=True)
-kosz.set_dirty()
-
-kitchen.map[3][3] = kosz
-kitchen.print_room()
+#KOSZOLÓDÁS
+# kosz = Cell(posy=3, posx=3, definition="kitakarított", cleanness=True)
+# kosz.set_dirty()
+#
+# kitchen.map[3][3] = kosz
+# kitchen.print_room()
 # robi = Vacuum_Robot(1,1)
 # kitchen.map[3][3] = robi
 # robi.move_right()
@@ -240,9 +270,9 @@ kitchen.print_room()
 
 # kitchen.map[3][3].set_clean() így jó
 
-
+print('Robi példányosítása')
 robi = Vacuum_Robot(2, 4)
-print('Robi PXPY: ' , robi.posy, robi.posx)
+#print('Robi PXPY: ' , robi.posy, robi.posx)
 #print('Robi PXPY: ' , robi.posy, robi.posx)
 #robi.move_right(kitchen.map)
 #print('Robi PXPY: ' , robi.posy, robi.posx)
@@ -258,64 +288,67 @@ print('Robi PXPY: ' , robi.posy, robi.posx)
 # kitchen.place_robot(robi,3,3)
 # kitchen.map[robi.posx][robi.posy] = Vacuum_Robot(robi.posx, robi.posy)
 # kitchen.map[3][3].set_clean()
-
+print('Nincs robi a képen')
 kitchen.print_room()
 
-robi.move_right(kitchen.map)
+robi.place_robot(kitchen.map)
+print('Robi ott a képen')
 kitchen.print_room()
-print('Robi PXPY: ' , robi.posy, robi.posx)
+#
+# robi.move_right(kitchen.map)
+# kitchen.print_room()
+# print('Robi PXPY: ' , robi.posy, robi.posx)
+#
+# robi.move_right(kitchen.map)
+# kitchen.print_room()
+# print('Robi PXPY: ' , robi.posy, robi.posx)
+#
+# robi.move_down(kitchen.map)
+# kitchen.print_room()
+# print('Robi PXPY: ' , robi.posy, robi.posx)
+#
+#
+# robi.move_left(kitchen.map)
+# kitchen.print_room()
+# print('Robi PXPY: ' , robi.posy, robi.posx)
+#
+#
+# robi.move_up(kitchen.map)
+# robi.move_up(kitchen.map)
+# robi.move_up(kitchen.map)
+# robi.move_up(kitchen.map)
+# robi.move_up(kitchen.map)
+# robi.move_up(kitchen.map)
+# robi.move_up(kitchen.map)
 
-robi.move_right(kitchen.map)
-kitchen.print_room()
-print('Robi PXPY: ' , robi.posy, robi.posx)
-
-robi.move_down(kitchen.map)
-kitchen.print_room()
-print('Robi PXPY: ' , robi.posy, robi.posx)
-
-
-robi.move_left(kitchen.map)
-kitchen.print_room()
-print('Robi PXPY: ' , robi.posy, robi.posx)
-
-
-robi.move_up(kitchen.map)
-robi.move_up(kitchen.map)
-robi.move_up(kitchen.map)
-robi.move_up(kitchen.map)
-robi.move_up(kitchen.map)
-robi.move_up(kitchen.map)
-robi.move_up(kitchen.map)
-
-kitchen.print_room()
-print('Robi PXPY: ' , robi.posy, robi.posx)
+print('Robi PXPY: ', robi.posy, robi.posx)
 
 robi.move_up_right(kitchen.map)
 kitchen.print_room()
-print('Robi PXPY: ' , robi.posy, robi.posx)
+print('Robi PXPY: ', robi.posy, robi.posx)
 
 robi.move_down(kitchen.map)
 kitchen.print_room()
-print('Robi PXPY: ' , robi.posy, robi.posx)
+print('Robi PXPY: ', robi.posy, robi.posx)
 
-robi.move_down_right(kitchen.map)
-kitchen.print_room()
-print('Robi PXPY: ' , robi.posy, robi.posx)
-
-robi.move_left(kitchen.map)
-kitchen.print_room()
-print('Robi PXPY: ' , robi.posy, robi.posx)
-
-
-robi.move_down_left(kitchen.map)
-kitchen.print_room()
-print('Robi PXPY: ' , robi.posy, robi.posx)
-
-robi.move_up_left(kitchen.map)
-kitchen.print_room()
-print('Robi PXPY: ' , robi.posy, robi.posx)
-
-
+# robi.move_down_right(kitchen.map)
+# kitchen.print_room()
+# print('Robi PXPY: ', robi.posy, robi.posx)
+#
+# robi.move_left(kitchen.map)
+# kitchen.print_room()
+# print('Robi PXPY: ', robi.posy, robi.posx)
+#
+#
+# robi.move_down_left(kitchen.map)
+# kitchen.print_room()
+# print('Robi PXPY: ', robi.posy, robi.posx)
+#
+# robi.move_up_left(kitchen.map)
+# kitchen.print_room()
+# print('Robi PXPY: ', robi.posy, robi.posx)
+#
+# print(findNeighbors(kitchen.map, robi.posx, robi.posy))
 
 
 #
@@ -351,13 +384,64 @@ print('Robi PXPY: ' , robi.posy, robi.posx)
 #kitchen.print_room()
 
 n = list(findNeighbors(kitchen.map, 2, 1))  # 9 szomszédai
-print(n)
-
-print(n[1])
+# print(n)
+#
+# print(n[1])
 
 # Declare the visited array
 vis = [[False for i in range(4)] for i in range(4)]
     # vis, False, sizeof vis)
+#
+# print(DataFrame(BFS(kitchen.map, vis, 0, 0)))
+#
+# print(kitchen.map[0][0] == 'w')
+#
+# print(robi.its_w(kitchen.map[0][0]))
 
-print(DataFrame(BFS(kitchen.map, vis, 0, 0)))
 
+# kosz = Cell(3,3, 'w', True)
+#
+# print(kosz)
+#
+# kitchen.map[3][3] = kosz
+#
+# kitchen.print_room()
+
+# robi.falig(kitchen)
+# robi.falig(kitchen)
+# robi.falig(kitchen)
+# robi.falig(kitchen)
+# robi.falig(kitchen)
+# robi.falig(kitchen)
+kitchen.print_room()
+print('innentől nem szabadna lépnie')
+robi.falig(kitchen)
+#robi.falig(kitchen)
+#robi.falig(kitchen)
+kitchen.print_room()
+print('Ez nem fal', robi.collision_detection(kitchen.map[5][5]))
+print('Ez egy fal',robi.collision_detection(kitchen.map[0][0]))
+
+print('Ez egy fal',robi.collision_detection(kitchen.map[8+1][1]))
+print('Hello')
+
+robi.falig(kitchen)
+kitchen.print_room()
+
+robi.falig(kitchen)
+kitchen.print_room()
+
+robi.falig(kitchen)
+kitchen.print_room()
+
+robi.falig(kitchen)
+kitchen.print_room()
+
+robi.falig(kitchen)
+kitchen.print_room()
+
+robi.falig(kitchen)
+kitchen.print_room()
+while True:
+    robi.falig(kitchen)
+    kitchen.print_room()
