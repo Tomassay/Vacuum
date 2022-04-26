@@ -3,6 +3,7 @@ import random
 #import numpy as np
 
 from findneighbors import findNeighbors
+from bfs import BFS
 
 wall = 'w'
 f = 0
@@ -351,3 +352,12 @@ print('Robi PXPY: ' , robi.posy, robi.posx)
 
 n = list(findNeighbors(kitchen.map, 2, 1))  # 9 szomszédai
 print(n)
+
+print(n[1])
+
+# Declare the visited array
+vis = [[False for i in range(4)] for i in range(4)]
+    # vis, False, sizeof vis)
+
+print(DataFrame(BFS(kitchen.map, vis, 0, 0)))
+
