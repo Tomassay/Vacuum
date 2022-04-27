@@ -1,26 +1,22 @@
-from itertools import product, starmap, islice
+from pandas import *
 
+matrix = [[1,2,3],[4,5,6],[7,8,9]]
 
-def findNeighbors(grid, x, y):
-    xi = (0, -1, 1) if 0 < x < len(grid) - 1 else ((0, -1) if x > 0 else (0, 1))
-    yi = (0, -1, 1) if 0 < y < len(grid[0]) - 1 else ((0, -1) if y > 0 else (0, 1))
-    return islice(starmap((lambda a, b: grid[x + a][y + b]), product(xi, yi)), 1, None)
-# 1st example:
-
-class Car():
-    def __init__(self, color):
-        self.color = color
-
-    def drive(self):
-        print('brümm-brümm')
+print(DataFrame(matrix))
+print(matrix[1][1])
 
 
 
-car = Car('red')
+def nexts(dir, x, y):
+    return dir[y][x+1]
 
-grid = [[ 0,  1,  2,  3],
-     [ 4,  5,  6,  7],
-     [ 8,  9, car, 11],
-     [12, 13, 14, 15]]
-n = list(findNeighbors(grid, 2, 1))   # find neighbors of 9
-print(n)
+def turn_right(dir,x,y):
+    global next_elem
+    next_elem = dir[y+1][x]
+    return next_elem
+
+next_elem = nexts(matrix, 1, 1)
+print(nexts(matrix,1,1))
+
+print(turn_right(matrix,1,1))
+print(next_elem)
