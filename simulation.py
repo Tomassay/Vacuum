@@ -103,7 +103,7 @@ class Vacuum_Robot:
     def __init__(self, posy, posx):
         self.posy = posy
         self.posx = posx
-        self.falig(kitchen.map)
+        #self.falig(kitchen.map)
 
     def __str__(self):
         return '❤'
@@ -124,10 +124,10 @@ class Vacuum_Robot:
             # print('térképteszt', matrix.map[0][2])
             # print('a vizsgált elem: ', matrix.map[self.posx+2][self.posy])
             # print('W-E',self.collision_detection(matrix.map[self.posx+2][self.posy]))
-            print('*****A FELTÉTEL****', self.whats_down(matrix))
+            #print('*****A FELTÉTEL****', self.whats_down(matrix))
             #if not self.collision_detection(matrix.map[self.posx+2][self.posy]):
             if self.whats_down(matrix) != 'w':
-                print('itt vagyok:', self.posx, self.posy)
+                #print('itt vagyok:', self.posx, self.posy)
                 self.move_down(matrix.map)
             else:
                 if not self.collision_detection(matrix.map[self.posx][self.posy-1]):
@@ -135,40 +135,41 @@ class Vacuum_Robot:
 
             #matrix.print_room()
         except:
-            print("FAL")
+            #print("FAL")
+            pass
 
-    def random_walk(self, matrix):
-        print(robi.last_step)
-        front = self.whats_front(matrix.map)
-        print('front',front)
-        back = self.whats_down(matrix.map)
-        right = self.whats_right(matrix.map)
-        left = self.whats_left(matrix.map)
-        if front != 'w':
-            #self.move_up(matrix.map)
-            #self.move_forward(matrix.map)
-            print('A')
-            #self.move_forward(matrix.map)
-            #self.direction = 'up'
-        elif front == 'w' and right != 'w':
-            print('B')
-            self.move_right(matrix.map)
-            #self.direction = 'right'
-            #self.move_forward(matrix.map)
-        elif front == 'w' and right == 'w' and back != 'w':
-            print('C')
-            #self.move_forward(matrix.map)
-            self.move_down(matrix.map)
-            #self.direction = 'down'
-        elif back == 'w' and right == 'w' and left != 'w':
-            print('D')
-            #self.move_forward(matrix.map)
-            self.move_left(matrix.map)
-            #self.direction = 'left'
+    # def random_walk(self, matrix):
+    #     # print(robi.last_step)
+    #     front = self.whats_front(matrix.map)
+    #     # print('front',front)
+    #     back = self.whats_down(matrix.map)
+    #     right = self.whats_right(matrix.map)
+    #     left = self.whats_left(matrix.map)
+    #     if front != 'w':
+    #         self.move_up(matrix.map)
+    #         self.move_forward(matrix.map)
+    #         # print('A')
+    #         #self.move_forward(matrix.map)
+    #         #self.direction = 'up'
+    #     elif front == 'w' and right != 'w':
+    #         # print('B')
+    #         self.move_right(matrix.map)
+    #         #self.direction = 'right'
+    #         #self.move_forward(matrix.map)
+    #     elif front == 'w' and right == 'w' and back != 'w':
+    #         print('C')
+    #         #self.move_forward(matrix.map)
+    #         self.move_down(matrix.map)
+    #         #self.direction = 'down'
+    #     elif back == 'w' and right == 'w' and left != 'w':
+    #         # print('D')
+    #         #self.move_forward(matrix.map)
+    #         self.move_left(matrix.map)
+    #         #self.direction = 'left'
 
     def random_walk2(self, matrix):
         arrows = [ '←','→','↓','↑']
-        print('utolsó lépés', self.last_step)
+        # print('utolsó lépés', self.last_step)
         front = self.whats_front(matrix.map)
         up_w = self.whats_up(matrix.map)
         back_w = self.whats_down(matrix.map)
@@ -177,7 +178,7 @@ class Vacuum_Robot:
         #up = self.move_up(matrix.map)
         #directions = [up]
         #d = random.choice(directions)
-        print('NYÍL?', self.whats_right(matrix.map) in arrows)
+        # print('NYÍL?', self.whats_right(matrix.map) in arrows)
 
         if front != 'w':
             print('A1')
@@ -186,9 +187,12 @@ class Vacuum_Robot:
             print('back_w', back_w)
             print('A2')
             self.move_forward(matrix.map)
-        elif front == 'w' and left_w != 'w':
+        elif front == 'w' and left_w != 'w' and right_w != 'w':
             print('B')
+            print('front: ', front, 'left_w: ', left_w)
             self.move_left(matrix.map)
+        elif front == 'w' and left_w != 'w' and right_w == 'w':
+            self.move_down(matrix.map)
         elif front == 'w' and left_w == 'w' and back_w != 'w':
 
 
@@ -198,15 +202,15 @@ class Vacuum_Robot:
             print('left_w', left_w)
             print('back_w', back_w)
             print('C2')
-            self.move_down(matrix.map)
+            self.move_right(matrix.map)
         elif front == 'w' and back_w == 'w' and right_w != 'w':
-            print('D feltétel:', front == 'w' and back_w == 'w' and right_w != 'w')
-            print('front', front)
-            print('right_w', right_w)
-            print('back_w', back_w)
-            print('D')
-            print('D')
-            print('D')
+            # print('D feltétel:', front == 'w' and back_w == 'w' and right_w != 'w')
+            # print('front', front)
+            # print('right_w', right_w)
+            # print('back_w', back_w)
+            # print('D')
+            # print('D')
+            # print('D')
             self.move_up(matrix.map)
         # elif self.whats_right(matrix.map) in arrows and self.whats_left(matrix.map) != 'w':
         #     self.move_left(matrix.map)
@@ -217,7 +221,87 @@ class Vacuum_Robot:
         # elif self.whats_down(matrix.map) in arrows and self.whats_up(matrix.map) != 'w':
         #     self.move_up(matrix.map)
 
+    def rw(self, matrix):
+        front = self.whats_front(matrix.map)
+        up_w = self.whats_up(matrix.map)
+        back_w = self.whats_down(matrix.map)
+        right_w = self.whats_right(matrix.map)
+        left_w = self.whats_left(matrix.map)
+        self.VOLT = False
+        print('front',front)
+        if front != 'w':
+            print('A')
+            self.move_forward(matrix.map)
+        elif front == 'w' and left_w != 'w':
+            self.move_left(matrix.map)
+        elif front == 'w' and right_w != 'w':
+            self.move_right(matrix.map)
+        elif front == 'w' and back_w != 'w':
+            self.move_down(matrix.map)
+        elif front == 'w' and up_w != 'w':
+            self.move_up(matrix.map)
+        else:
+            print("*** kimaradt CASE")
+            return self.VOLT
 
+
+
+
+        # elif back_w != 'w' and self.last_step != 'up':
+        #     print('B')
+        #     self.move_down(matrix.map)
+        # elif front == "w" and self.last_step == 'up' and left_w != 'w':
+        #     print('C')
+        #     self.move_left(matrix.map)
+        # elif front == 'w' and self.last_step == 'up' and right_w !='w':
+        #     print('D')
+        #     self.move_right(matrix.map)
+        # elif front == 'w' and right_w == 'w' and left_w != 'w':
+        #     self.move_up(matrix.map)
+
+    def move_random(self, matrix):
+
+        self.move_forward(matrix.map)
+
+        up_w = self.whats_up(matrix.map)
+        back_w = self.whats_down(matrix.map)
+        right_w = self.whats_right(matrix.map)
+        left_w = self.whats_left(matrix.map)
+        directions = ['up', 'down', 'left', 'right']
+        arrows = ['←', '→', '↓', '↑']
+        random.shuffle(directions)
+        suffled_var = directions.pop()
+
+        if suffled_var == 'up':
+            self.move_up(matrix.map)
+        if suffled_var == 'down':
+            self.move_down(matrix.map)
+        if suffled_var == 'right':
+            self.move_right(matrix.map)
+        if suffled_var == 'left':
+            self.move_left(matrix.map)
+
+    def move_random_s(self, matrix):
+
+        self.move_forward(matrix)
+
+        up_w = self.whats_up(matrix)
+        back_w = self.whats_down(matrix)
+        right_w = self.whats_right(matrix)
+        left_w = self.whats_left(matrix)
+        directions = ['up', 'down', 'left', 'right']
+        arrows = ['←', '→', '↓', '↑']
+        random.shuffle(directions)
+        suffled_var = directions.pop()
+
+        if suffled_var == 'up':
+            self.move_up(matrix)
+        if suffled_var == 'down':
+            self.move_down(matrix)
+        if suffled_var == 'right':
+            self.move_right(matrix)
+        if suffled_var == 'left':
+            self.move_left(matrix)
 
 
     def whats_front(self, matrix):
@@ -263,7 +347,7 @@ class Vacuum_Robot:
 
 
     def move_forward(self, matrix):
-        print('utolsó lépés move forward', self.last_step)
+        # print('utolsó lépés move forward', self.last_step)
         if self.last_step == 'up':
             self.move_up(matrix)
         elif self.last_step == 'right':
@@ -356,7 +440,7 @@ class Vacuum_Robot:
         return matrix
 
     def possible_move_x(self, matrix):
-        print('posx', self.posx, 'len', len(matrix))
+        # print('posx', self.posx, 'len', len(matrix))
         if self.posx >= len(matrix):
            self.posx = len(matrix)
            possible = False
@@ -375,23 +459,23 @@ kitchen.make_room()
 
 # kitchen.map[3][3].set_clean() így jó
 
-print('Robi példányosítása')
+# print('Robi példányosítása')
 robi = Vacuum_Robot(5, 5)
-print('Nincs robi a képen')
+# print('Nincs robi a képen')
 kitchen.print_room()
 
 robi.place_robot(kitchen.map)
-print('Robi ott a képen')
+# print('Robi ott a képen')
 kitchen.print_room()
-print('Robi PXPY: ', robi.posy, robi.posx)
+# print('Robi PXPY: ', robi.posy, robi.posx)
 
 robi.move_up_right(kitchen.map)
 kitchen.print_room()
-print('Robi PXPY: ', robi.posy, robi.posx)
+# print('Robi PXPY: ', robi.posy, robi.posx)
 
 robi.move_down(kitchen.map)
 kitchen.print_room()
-print('Robi PXPY: ', robi.posy, robi.posx)
+# print('Robi PXPY: ', robi.posy, robi.posx)
 
 n = list(findNeighbors(kitchen.map, 2, 1))  # 9 szomszédai
 # print(n)
@@ -406,16 +490,16 @@ vis = [[False for i in range(4)] for i in range(4)]
 #
 
 kitchen.print_room()
-print('innentől nem szabadna lépnie')
+# print('innentől nem szabadna lépnie')
 #robi.falig(kitchen)
 #robi.falig(kitchen)
 #robi.falig(kitchen)
 kitchen.print_room()
-print('Ez nem fal', robi.collision_detection(kitchen.map[5][5]))
-print('Ez egy fal',robi.collision_detection(kitchen.map[0][0]))
+# print('Ez nem fal', robi.collision_detection(kitchen.map[5][5]))
+# print('Ez egy fal',robi.collision_detection(kitchen.map[0][0]))
 
-print('Ez egy fal',robi.collision_detection(kitchen.map[8+1][1]))
-print('Hello')
+# print('Ez egy fal',robi.collision_detection(kitchen.map[8+1][1]))
+# print('Hello')
 
 # robi.falig(kitchen)
 # kitchen.print_room()
@@ -434,29 +518,53 @@ print('Hello')
 #
 # robi.falig(kitchen)
 # kitchen.print_room()
+
+w = 'w'
+
+test_room = [[w,w,w,w,w,w,w,w,w,w],
+             [w,1,2,3,4,5,6,7,8,w],
+             [w,9,10,11,12,13,14,15,16,w],
+             [w,17,18,19,20,21,22,23,24,w],
+             [w,25,26,27,28,29,30,31,32,w],
+             [w,33,34,35,36,37,38,39,40,w],
+             [w,41,42,43,44,45,46,47,48,w],
+             [w,49,50,w,51,w,52,53,54,w],
+             [w,w,w,55,56,57,w,w,w,w],
+             [w,w,w,w,w,w,w,w,w,w]]
 
 steps = 0
-while steps<18:
+
+while steps<500:
     #robi.falig(kitchen)
-    robi.random_walk2(kitchen)
-    kitchen.print_room()
+    #robi.random_walk2(kitchen)
+
+
+    #MŰKÖDIK A GENERÁLT TÉRKÉPPEL JÓL
+    #robi.rw(kitchen)
+    #robi.move_random(kitchen)
+    # kitchen.print_room()
+    #MŰKÖDIK A TESZT TÉRKÉPPEL JÓL
+    # robi.move_random_s(test_room)
+    #
+    # print(DataFrame(test_room))
     steps += 1
 
-print('FElette',robi.whats_up(kitchen.map))
-print('Robi PYPX: ', robi.posy, robi.posx)
+#print(robi.VOLT)
+# print('FElette',robi.whats_up(kitchen.map))
+# print('Robi PYPX: ', robi.posy, robi.posx)
 
-print('ALATTA',robi.whats_down(kitchen.map))
-print('Robi PYPX: ', robi.posy, robi.posx)
+# print('ALATTA',robi.whats_down(kitchen.map))
+# print('Robi PYPX: ', robi.posy, robi.posx)
 
-print('JOBBRA',robi.whats_left(kitchen.map))
-print('Robi PYPX: ', robi.posy, robi.posx)
+# print('JOBBRA',robi.whats_left(kitchen.map))
+# print('Robi PYPX: ', robi.posy, robi.posx)
 
-print('BALLRA',robi.whats_right(kitchen.map))
-print('Robi PYPX: ', robi.posy, robi.posx)
+# print('BALLRA',robi.whats_right(kitchen.map))
+# print('Robi PYPX: ', robi.posy, robi.posx)
 
-print('FElette',robi.whats_up(kitchen.map))
-print('Robi PYPX: ', robi.posy, robi.posx)
+# print('FElette',robi.whats_up(kitchen.map))
+# print('Robi PYPX: ', robi.posy, robi.posx)
 
-print(kitchen.map[9][2])
+# print(kitchen.map[9][2])
 
-robi.whats_front(kitchen.map)
+# robi.whats_front(kitchen.map)
