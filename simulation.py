@@ -113,35 +113,54 @@ class Vacuum_Robot:
             Cell.set_clean()
 
     def move_right(self, matrix):
-
-        matrix[self.posy][self.posx] = '→'
-        self.posx += 1
-        matrix[self.posy][self.posx] = self
-        return matrix
+        if self.whats_right(matrix.map) == 'w':
+            matrix[self.posy][self.posx] = '→'
+            self.posx += 1
+            matrix[self.posy][self.posx] = self
+        else:
+            pass
 
     def collision_detection(self, elem):
         return elem == 'w'
 
     def falig(self, matrix):
         try:
-            print(self.posx, self.posy)
-            print(self.collision_detection(matrix.map[self.posx+1][self.posy]))
-            print('térképteszt', matrix.map[0][2])
-            print('a vizsgált elem: ', matrix.map[self.posx+2][self.posy])
-            print('W-E',self.collision_detection(matrix.map[self.posx+2][self.posy]))
-            if not self.collision_detection(matrix.map[self.posx+2][self.posy]):
-                print('itt vagyok:' , self.posx, self.posy)
+            # print(self.posx, self.posy)
+            # print(self.collision_detection(matrix.map[self.posx+1][self.posy]))
+            # print('térképteszt', matrix.map[0][2])
+            # print('a vizsgált elem: ', matrix.map[self.posx+2][self.posy])
+            # print('W-E',self.collision_detection(matrix.map[self.posx+2][self.posy]))
+            print('*****A FELTÉTEL****', self.whats_down(matrix))
+            #if not self.collision_detection(matrix.map[self.posx+2][self.posy]):
+            if self.whats_down(matrix) != 'w':
+                print('itt vagyok:', self.posx, self.posy)
                 self.move_down(matrix.map)
             else:
                 if not self.collision_detection(matrix.map[self.posx][self.posy-1]):
                     self.move_left(matrix.map)
-            matrix.print_room()
 
+            #matrix.print_room()
         except:
             print("FAL")
 
-    def up(self, matrix):
-        return matrix[self.posx][self.posy-1]
+
+    def mdl(self, matrix):
+        if self.whats_down(matrix.map) == 'w':
+            self.move_left(matrix.map)
+        else:
+            self.move_down(matrix.map)
+
+    def whats_up(self, matrix):
+        return matrix[self.posy-1][self.posx]
+
+    def whats_down(self, matrix):
+        return matrix[self.posy+1][self.posx]
+
+    def whats_left(self, matrix):
+        return matrix[self.posy][self.posx-1]
+
+    def whats_right(self, matrix):
+        return matrix[self.posy][self.posx+1]
 
 
     def is_grid_free(self, cell):
@@ -155,24 +174,30 @@ class Vacuum_Robot:
         matrix[self.posy][self.posx] = self
 
     def move_left(self, matrix):
-
-        matrix[self.posy][self.posx] = '←'
-        self.posx -= 1
-        matrix[self.posy][self.posx] = self
-        return matrix
+        if self.whats_left(matrix) != "w":
+            matrix[self.posy][self.posx] = '←'
+            self.posx -= 1
+            matrix[self.posy][self.posx] = self
+        else:
+            pass
 
     def move_up(self, matrix):
-        print(self.possible_move_x(matrix))
-        matrix[self.posy][self.posx] = '↑'
-        self.posy -= 1
-        matrix[self.posy][self.posx] = self
-        return matrix
+        #print(self.possible_move_x(matrix))
+        if self.whats_up(matrix) != "w":
+            matrix[self.posy][self.posx] = '↑'
+            self.posy -= 1
+            matrix[self.posy][self.posx] = self
+        else:
+            pass
 
     def move_down(self, matrix):
-        matrix[self.posy][self.posx] = '↓'
-        self.posy += 1
-        matrix[self.posy][self.posx] = self
-        return matrix
+        if self.whats_down(matrix) != "w":
+            matrix[self.posy][self.posx] = '↓'
+            self.posy += 1
+            matrix[self.posy][self.posx] = self
+        #return matrix
+        else:
+            pass
 
     def move_up_right(self, matrix):
         matrix[self.posy][self.posx] = '↗'
@@ -284,10 +309,25 @@ print('Hello')
 # kitchen.print_room()
 
 steps = 0
-while steps<1:
-    robi.falig(kitchen)
+while steps<25:
+    #robi.falig(kitchen)
+    robi.mdl(kitchen)
     kitchen.print_room()
     steps += 1
 
-print('FElette',robi.up(kitchen.map))
+print('FElette',robi.whats_up(kitchen.map))
 print('Robi PYPX: ', robi.posy, robi.posx)
+
+print('ALATTA',robi.whats_down(kitchen.map))
+print('Robi PYPX: ', robi.posy, robi.posx)
+
+print('JOBBRA',robi.whats_left(kitchen.map))
+print('Robi PYPX: ', robi.posy, robi.posx)
+
+print('BALLRA',robi.whats_right(kitchen.map))
+print('Robi PYPX: ', robi.posy, robi.posx)
+
+print('FElette',robi.whats_up(kitchen.map))
+print('Robi PYPX: ', robi.posy, robi.posx)
+
+print(kitchen.map[9][2])

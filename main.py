@@ -180,6 +180,7 @@ class Vacuum_Robot:
         return matrix
 
     def move_down(self, matrix):
+
         matrix[self.posy][self.posx] = '↓'
         #matrix[self.posy][self.posx] = Cell(posy=self.posy, posx=self.posx, definition='basic', cleanness=True)
         self.posy += 1
