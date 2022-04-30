@@ -126,6 +126,8 @@ class Vacuum_Robot:
         if self.posx == Cell.posx and self.posy == Cell.posy:
             Cell.set_clean()
 
+
+
     def move_right(self, matrix):
 
         #matrix[self.posy][self.posx] = Cell(posy=self.posy, posx=self.posx, definition='basic', cleanness=True)

@@ -451,6 +451,16 @@ class Vacuum_Robot:
            possible = True
         return possible
 
+    def turn(self, matrix):
+        rotated = zip(*matrix[::-1])
+        return list(rotated)
+
+    def move_or_round(self, matrix):
+        if self.whats_front(matrix) != 'w':
+            self.move_forward(matrix)
+        else:
+            new_matrix = self.turn(matrix)
+            self.move_forward(new_matrix)
 
 kitchen = Room('kitchen', 10, 10)
 
@@ -547,6 +557,9 @@ while steps<500:
     # robi.move_random_s(test_room)
     #
     # print(DataFrame(test_room))
+    # robi.move_or_round(kitchen.map)
+    new_map = robi.turn(kitchen.map)
+    new_map.print_room()
     steps += 1
 
 #print(robi.VOLT)
