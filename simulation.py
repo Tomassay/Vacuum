@@ -42,6 +42,9 @@ class Room:
     def room_size(self):
         return str(self.length * self.width)
 
+    def set_map(self, map):
+        self.map = map
+
     def __str__(self):
         size = self.room_size()
         return 'Its a ' + self.name + ' and its ' + size +  'm2 and its clean'
@@ -550,16 +553,17 @@ while steps<500:
 
 
     #MŰKÖDIK A GENERÁLT TÉRKÉPPEL JÓL
-    #robi.rw(kitchen)
-    #robi.move_random(kitchen)
-    # kitchen.print_room()
+    robi.rw(kitchen)
+    robi.move_random(kitchen)
+    kitchen.print_room()
     #MŰKÖDIK A TESZT TÉRKÉPPEL JÓL
     # robi.move_random_s(test_room)
     #
     # print(DataFrame(test_room))
     # robi.move_or_round(kitchen.map)
-    new_map = robi.turn(kitchen.map)
-    new_map.print_room()
+    # new_map = robi.turn(kitchen.map)
+    # kitchen.set_map(new_map)
+
     steps += 1
 
 #print(robi.VOLT)
