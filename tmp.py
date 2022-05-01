@@ -12,26 +12,29 @@ pygame.init()
 dis_width = 400
 dis_height = 300
 dis = pygame.display.set_mode(size=(dis_width, dis_height))
-dis = pygame.display.set_mode(size=(dis_width, dis_height))
-
+clock = pygame.time.Clock()
+robot_speed=30
 
 def message(msg, color):
     mesg = font_style.render(msg, True, color)
     dis.blit(mesg, [dis_width/2, dis_height/2])
 
+
 pygame.display.update()
 pygame.display.set_caption("Robot Vacuum Cleaner Simulation by Tamas Levay")
-
-rows = int(dis_width / ROBOT_RADIUS)
-cols = int(dis_height / ROBOT_RADIUS)
+#
+# rows = int(dis_width / ROBOT_RADIUS)
+# cols = int(dis_height / ROBOT_RADIUS)
 
 # matrix = {(row, col):0 for row in range(rows) for col in range(rows)}
-#rows = 4
-#cols = 4
+rows = 6
+cols = 6
 matrix = {(row, col): 0 for row in range(rows) for col in range(cols)}
+
 
 def difference_one(num1, num2):
     return num1 + 1 == num2 or num2 +1 == num1
+
 
 def is_near(tuple1, tuple2):
     if tuple1[0] == tuple2[0] and difference_one(tuple1[1], tuple2[1]) \
@@ -40,6 +43,7 @@ def is_near(tuple1, tuple2):
         return True
     else:
         return False
+
 
 def neigbors(dict, elem):
     neigbours = []
@@ -64,6 +68,7 @@ def valid_move(destination, coord_list):
     if destination in coord_list:
         return True
     else:
+        print('False')
         return False
 
 # print(neigbors_dict[(0,0)])
@@ -123,58 +128,26 @@ def move_robi(oldx, oldy, newx, newy, rb):
 def check_right():
     return valid_move((robi.get_posx(), robi.get_posy()), neigbors_dict[(robi.get_posx()+1, robi.get_posy())])
 
+
 def make_valid_move_right():
     global robot_motion_x
     try:
-        if check_right():
+        if valid_move((robi.get_posx(), robi.get_posy()), neigbors_dict[(robi.get_posx()+1, robi.get_posy())]):
             move_robi(robi.get_posx(), robi.get_posy(), robi.get_posx()+1, robi.get_posy(), robi)
             robot_motion_x = 1
         else:
             print('fal')
     except:
-            pass
+            print('EXCEPT')
 
-def make_valid_move_left():
+def make_valid_move_right1():
     global robot_motion_x
-    try:
-        if valid_move((robi.get_posx(), robi.get_posy()), neigbors_dict[(robi.get_posx()+1, robi.get_posy())]):
-            move_robi(robi.get_posx(), robi.get_posy(), robi.get_posx()+1, robi.get_posy(), robi)
-            robot_motion_x = -1
-        else:
-            print('fal')
-    except:
-            pass
+    move_robi(robi.get_posx(), robi.get_posy(), robi.get_posx()+1, robi.get_posy(), robi)
+    robot_motion_x = 1
 
-def make_valid_move_up():
-    global robot_motion_y
-    try:
-        if valid_move((robi.get_posx(), robi.get_posy()), neigbors_dict[(robi.get_posx()+1, robi.get_posy())]):
-            move_robi(robi.get_posx(), robi.get_posy(), robi.get_posx()+1, robi.get_posy(), robi)
-            robot_motion_y = 1
-        else:
-            print('fal')
-    except:
-            pass
-
-def make_valid_move_down():
-    global robot_motion_y
-    try:
-        if valid_move((robi.get_posx(), robi.get_posy()), neigbors_dict[(robi.get_posx()+1, robi.get_posy())]):
-            move_robi(robi.get_posx(), robi.get_posy(), robi.get_posx()+1, robi.get_posy(), robi)
-            robot_motion_y = -1
-        else:
-            print('fal')
-    except:
-            pass
-
-
-move_robi(3,3, 0, 0, robi)
-print(matrix)
-
-print(matrix[(3,2)])
-print(robi.get_posy())
 def draw_robot(posx, posy):
     dis.fill((0, 0, 0))
+    print('draw_pos_x',posx)
     pygame.draw.ellipse(dis, ROBOT_COLOR, [posx*BLOCK_SIZE, posy*BLOCK_SIZE, ROBOT_RADIUS, ROBOT_RADIUS])
 
 pygame.display.update()
@@ -209,16 +182,17 @@ simulation_over = False
 
 move_robi(robi.get_posx(), robi.get_posy(), 0, 1, robi)
 draw_robot(robi.get_posx(), robi.get_posy())
+
 draw_grid()
 
 pygame.display.update()
 time.sleep(1)
 
-print('Robi pozi', robi.get_posx(), robi.get_posy())
-
-arg_t = (robi.get_posx(), robi.get_posy())
-print(valid_move((robi.get_posx(), robi.get_posy()), neigbors_dict[(robi.get_posx()+1, robi.get_posy()+1)]))
-print(matrix)
+# print('Robi pozi', robi.get_posx(), robi.get_posy())
+#
+# arg_t = (robi.get_posx(), robi.get_posy())
+# print(valid_move((robi.get_posx(), robi.get_posy()), neigbors_dict[(robi.get_posx()+1, robi.get_posy()+1)]))
+# print(matrix)
 
 
 robot_position_x = robi.get_posx()
@@ -229,40 +203,23 @@ robot_motion_y = 0
 
 steps = 0
 
+# print(robot_position_x, robot_position_y)
+
+
 while steps < 20:
-    print("1 robot_x, robot_y", robot_position_x, robot_position_y)
-    print("1 robot_motion_x, 1 robot_motion_y", robot_motion_x, robot_motion_y)
     make_valid_move_right()
-    draw_robot(robot_position_x, robot_position_y)
+    draw_robot(robi.get_posx(), robi.get_posy())
     draw_grid()
-    # make_valid_move_down()
-    # print("2 robot_x, robot_y", robot_position_x, robot_position_y)
-    # draw_robot(robot_position_x, robot_position_y)
-    # draw_grid()
-    # make_valid_move_down()
-    # draw_robot(robot_position_x, robot_position_y)
-    # draw_grid()
-    # make_valid_move_right()
-    # draw_robot(robot_position_x, robot_position_y)
-    # draw_grid()
-    # make_valid_move_left()
-    # draw_robot(robot_position_x, robot_position_y)
-    # draw_grid()
-    # make_valid_move_up()
-    # #draw_robot(robi.get_posx(), robi.get_posy())
-    # draw_robot(robot_position_x, robot_position_y)
-    # draw_grid()
-    pygame.display.update()
-    time.sleep(1)
-    print(matrix)
     robot_position_x += robot_motion_x
-    robot_position_y += robot_motion_y
-    #robot_position_y += robot_motion_y
+    robot_position_y != robot_motion_y
 
-    #print("2 robot_motion_x", robot_motion_x)
+    pygame.display.update()
+    clock.tick(robot_speed)
+
+
     steps += 1
-
-
+#
+# draw_robot(5, robot_position_y)
 
 
 # while not simulation_over:
