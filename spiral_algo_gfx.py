@@ -18,7 +18,7 @@ dis_height = 300
 dis = pygame.display.set_mode(size=(dis_width, dis_height))
 clock = pygame.time.Clock()
 robot_speed = 30
-not_wall = True
+
 
 def message(msg, color):
     mesg = font_style.render(msg, True, color)
@@ -283,7 +283,7 @@ neighbours_dict = dict.fromkeys(matrix)
 for key, value in matrix.items():
     neighbours_dict[key] = neigbors(matrix, key)
 
-matrix[(1, 1)] = 2
+#matrix[(1, 1)] = 2
 #matrix[(oldx, oldy)] = 0
 def not_obstacle(destination):
 
@@ -309,21 +309,18 @@ def make_dirt():
     except KeyError:
         pass
 
-def ransom_direction():
-
-    pass
 
 def make_obstacles(obstacles_number):
 
-    dim = max(rows, cols)
-    # z = random.randint(1,dim)
-    try:
-        for _ in range(obstacles_number):
-            x = random.randint(0, rows)
-            y = random.randint(0, cols)
-            if matrix[(x,y)] != 1:
-                matrix[(x,y)] = 2
-    except KeyError:
+    # dim = max(rows, cols)
+    # # z = random.randint(1,dim)
+    # try:
+    #     for _ in range(obstacles_number):
+    #         x = random.randint(0, rows)
+    #         y = random.randint(0, cols)
+    #         if matrix[(x,y)] != 1:
+    #             matrix[(x,y)] = 2
+    # except KeyError:
         pass
 
 robi = Robot()

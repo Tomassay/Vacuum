@@ -537,12 +537,12 @@ w = 'w'
 test_room = [[w,w,w,w,w,w,w,w,w,w],
              [w,1,2,3,4,5,6,7,8,w],
              [w,9,10,11,12,13,14,15,16,w],
-             [w,17,18,19,20,21,22,23,24,w],
-             [w,25,26,27,28,29,30,31,32,w],
+             [w,17,18,19,w,21,22,23,24,w],
+             [w,25,26,27,w,29,30,31,32,w],
              [w,33,34,35,36,37,38,39,40,w],
              [w,41,42,43,44,45,46,47,48,w],
-             [w,49,50,w,51,w,52,53,54,w],
-             [w,w,w,55,56,57,w,w,w,w],
+             [w,49,50,w,51,51,53,54,55,w],
+             [w,w,w,56,57,58,w,w,w,w],
              [w,w,w,w,w,w,w,w,w,w]]
 
 steps = 0
@@ -553,13 +553,13 @@ while steps<500:
 
 
     #MŰKÖDIK A GENERÁLT TÉRKÉPPEL JÓL
-    robi.rw(kitchen)
-    robi.move_random(kitchen)
-    kitchen.print_room()
+    # robi.rw(kitchen)
+    # robi.move_random(kitchen)
+    # kitchen.print_room()
     #MŰKÖDIK A TESZT TÉRKÉPPEL JÓL
-    # robi.move_random_s(test_room)
-    #
-    # print(DataFrame(test_room))
+    robi.move_random_s(test_room)
+
+    print(DataFrame(test_room))
     # robi.move_or_round(kitchen.map)
     # new_map = robi.turn(kitchen.map)
     # kitchen.set_map(new_map)

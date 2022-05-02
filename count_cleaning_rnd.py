@@ -253,4 +253,7 @@ while steps<500:
     robi.move_forward(kitchen.map)
     kitchen.print_room()
 
+    # robi.move_random(test_room)
+    # print(DataFrame(test_room))
+
     steps += 1
