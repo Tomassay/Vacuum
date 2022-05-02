@@ -111,7 +111,7 @@ def move_robi(oldx, oldy, newx, newy, rb):
     matrix[(oldx, oldy)] = 0
     robi.set_posx(newx)
     robi.set_posy(newy)
-    print('robi most', rb.posx, rb.posy)
+    print(f"Robi's pos: ({rb.posx}, {rb.posy})")
 
 
 def right_is_valid():
@@ -258,15 +258,15 @@ def make_spiral():
     number = max(cols, rows)
     while(turns <= number):
         call(turns, make_valid_move_left)
-        print(matrix)
+        #print(matrix)
         call(turns, make_valid_move_up)
-        print(matrix)
+        #print(matrix)
         call(turns, make_valid_move_right)
-        print(matrix)
+        #print(matrix)
         call(turns, make_valid_move_down)
-        print(matrix)
+        #print(matrix)
         turns += 1
-        print('turns',turns)
+        #print('turns',turns)
 
 def call(n, func):
     for _ in range(n):
@@ -311,17 +311,8 @@ def make_dirt():
 
 
 def make_obstacles(obstacles_number):
+    pass
 
-    # dim = max(rows, cols)
-    # # z = random.randint(1,dim)
-    # try:
-    #     for _ in range(obstacles_number):
-    #         x = random.randint(0, rows)
-    #         y = random.randint(0, cols)
-    #         if matrix[(x,y)] != 1:
-    #             matrix[(x,y)] = 2
-    # except KeyError:
-        pass
 
 robi = Robot()
 
@@ -338,9 +329,12 @@ font_style = pygame.font.SysFont(None, 50)
 simulation_over = False
 
 
-move_robi(robi.get_posx(), robi.get_posy(), 0, 1, robi)
+move_robi(robi.get_posx(), robi.get_posy(), 1, 1, robi)
 draw_robot(robi.get_posx(), robi.get_posy())
-
+matrix[(5,5)] = 2
+matrix[(4,5)] = 2
+matrix[(5,4)] = 2
+matrix[(4,4)] = 2
 draw_grid()
 
 pygame.display.update()
