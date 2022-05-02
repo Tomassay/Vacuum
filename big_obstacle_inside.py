@@ -55,8 +55,6 @@ def neigbors(dict, elem):
     return neigbours
 
 
-
-
 def valid_move(destination, coord_list):
     if destination in coord_list:
         return True
@@ -118,15 +116,6 @@ def right_is_valid():
     return valid_move((robi.get_posx(), robi.get_posy()), neighbours_dict[(robi.get_posx() + 1, robi.get_posy())])
 
 
-# def move_right():
-#     global robot_motion_x
-#     move_robi(robi.get_posx(), robi.get_posy(), robi.get_posx() + 1, robi.get_posy(), robi)
-#     draw_robot(robi.get_posx(), robi.get_posy())
-#     draw_grid()
-#     pygame.display.update()
-#     clock.tick(5)
-#     robot_motion_x = 1
-
 def move_right():
     global robot_motion_x
     next_stp =(robi.get_posx() +1, robi.get_posy())
@@ -137,6 +126,7 @@ def move_right():
     pygame.display.update()
     clock.tick(5)
     robot_motion_x = 1
+
 
 def make_valid_move_right():
     try:
@@ -150,15 +140,6 @@ def left_is_valid():
     return valid_move((robi.get_posx(), robi.get_posy()), neighbours_dict[(robi.get_posx() - 1, robi.get_posy())])
 
 
-# def move_left():
-#     global robot_motion_x
-#     move_robi(robi.get_posx(), robi.get_posy(), robi.get_posx() - 1, robi.get_posy(), robi)
-#     draw_robot(robi.get_posx(), robi.get_posy())
-#     draw_grid()
-#     pygame.display.update()
-#     clock.tick(5)
-#     robot_motion_x = -1
-
 def move_left():
     global robot_motion_x
     next_stp = (robi.get_posx() - 1, robi.get_posy())
@@ -169,6 +150,7 @@ def move_left():
     pygame.display.update()
     clock.tick(5)
     robot_motion_x = -1
+
 
 def make_valid_move_left():
 
@@ -182,15 +164,6 @@ def make_valid_move_left():
 def down_is_valid():
     return valid_move((robi.get_posx(), robi.get_posy()), neighbours_dict[robi.get_posx(), robi.get_posy() + 1])
 
-
-# def move_down():
-#     global robot_motion_y
-#     move_robi(robi.get_posx(), robi.get_posy(), robi.get_posx(), robi.get_posy() + 1, robi)
-#     draw_robot(robi.get_posx(), robi.get_posy())
-#     draw_grid()
-#     pygame.display.update()
-#     clock.tick(5)
-#     robot_motion_y = 1
 
 def move_down():
     global robot_motion_y
@@ -215,15 +188,6 @@ def make_valid_move_down():
 def up_is_valid():
     return valid_move((robi.get_posx(), robi.get_posy()), neighbours_dict[robi.get_posx(), robi.get_posy() - 1])
 
-
-# def move_up():
-#     global robot_motion_y
-#     move_robi(robi.get_posx(), robi.get_posy(), robi.get_posx(), robi.get_posy() - 1, robi)
-#     draw_robot(robi.get_posx(), robi.get_posy())
-#     draw_grid()
-#     pygame.display.update()
-#     clock.tick(5)
-#     robot_motion_y = -1
 
 def move_up():
     global robot_motion_y
@@ -253,6 +217,7 @@ def matrix_row(tuple):
 def matrix_columb(tuple):
     return tuple[1]
 
+
 def make_spiral():
     global turns
     number = max(cols, rows)
@@ -268,9 +233,11 @@ def make_spiral():
         turns += 1
         #print('turns',turns)
 
+
 def call(n, func):
     for _ in range(n):
         func()
+
 
 def draw_robot(posx, posy):
     dis.fill((0, 0, 0))
@@ -283,18 +250,14 @@ neighbours_dict = dict.fromkeys(matrix)
 for key, value in matrix.items():
     neighbours_dict[key] = neigbors(matrix, key)
 
-#matrix[(1, 1)] = 2
-#matrix[(oldx, oldy)] = 0
+
 def not_obstacle(destination):
 
     if matrix[(destination[0], destination[1])] != 2:
         return True
     else:
         return False
-# alma = (5,5)
-# korte = (1,1)
-# print('not obst', not_obstacle(alma))
-# print('not obst', not_obstacle(korte))
+
 
 def make_dirt():
 

@@ -29,6 +29,7 @@ class Cell:
     def set_dirty(self):
         self.cleanness = False
 
+
 class Room:
 
     def __init__(self, name, length, width):
@@ -76,7 +77,6 @@ class Room:
                         self.map[w][l] = number
                         # number += 1
 
-
         except:
             pass
 
@@ -96,6 +96,7 @@ class Room:
 
     def print_room(self):
         print(DataFrame(self.map))
+
 
 class Vacuum_Robot:
 
@@ -163,7 +164,6 @@ class Vacuum_Robot:
         elif self.last_step == 'down':
             self.move_down(matrix)
 
-
     def whats_front(self, matrix):
         if self.last_step == 'up':
             front = self.whats_up(matrix)
@@ -185,7 +185,6 @@ class Vacuum_Robot:
             self.last_step = 'left'
         else:
             pass
-
 
     def move_right(self, matrix):
         number = self.whats_right(matrix)
@@ -216,9 +215,8 @@ class Vacuum_Robot:
             matrix[self.posy][self.posx] = number
             self.posy += 1
             matrix[self.posy][self.posx] = self
-
             self.last_step = 'down'
-        #return matrix
+
         else:
             pass
 
@@ -252,8 +250,4 @@ while steps<500:
     robi.move_random(kitchen)
     robi.move_forward(kitchen.map)
     kitchen.print_room()
-
-    # robi.move_random(test_room)
-    # print(DataFrame(test_room))
-
     steps += 1

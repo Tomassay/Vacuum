@@ -26,8 +26,6 @@ pygame.display.set_caption("Robot Vacuum Cleaner Simulation by Tamas Levay")
 
 rows = int(dis_width / ROBOT_RADIUS)
 cols = int(dis_height / ROBOT_RADIUS)
-# rows =3
-# cols = 3
 turns = 1
 matrix = {(row, col): 0 for row in range(rows) for col in range(cols)}
 
@@ -149,6 +147,7 @@ def move_left():
     clock.tick(5)
     robot_motion_x = -1
 
+
 def make_valid_move_left():
 
     try:
@@ -214,6 +213,7 @@ def matrix_row(tuple):
 def matrix_columb(tuple):
     return tuple[1]
 
+
 def make_spiral():
     global turns
     number = max(cols, rows)
@@ -229,6 +229,7 @@ def call(n, func):
     for _ in range(n):
         func()
 
+
 def draw_robot(posx, posy):
     dis.fill((0, 0, 0))
     pygame.draw.ellipse(dis, ROBOT_COLOR, [posx * BLOCK_SIZE, posy * BLOCK_SIZE, ROBOT_RADIUS, ROBOT_RADIUS])
@@ -239,12 +240,14 @@ neighbours_dict = dict.fromkeys(matrix)
 for key, value in matrix.items():
     neighbours_dict[key] = neigbors(matrix, key)
 
+
 def not_obstacle(destination):
 
     if matrix[(destination[0], destination[1])] != 2:
         return True
     else:
         return False
+
 
 def make_dirt():
 
